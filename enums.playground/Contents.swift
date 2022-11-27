@@ -13,18 +13,18 @@ import Cocoa
 // the most basic definition of an enum - note that, like with types in Swift more generally, we capitalise the name. It's also a convention to use a singular name.
 
 enum F1Team {
-    case Mercedes
-    case RBR
-    case Ferrari
-    case McLaren
+    case mercedes
+    case rbr
+    case ferrari
+    case mcLaren
 }
 
 // can also define the cases of an enum on a single line
 enum SingleLineF1Team {
-    case Mercedes, RBR, Ferrari
+    case mercedes, rbr, ferrari
 }
 
-var myFaveTeam = F1Team.McLaren
+var myFaveTeam = F1Team.mcLaren
 
 /* Combining enum cases with a switch statement
  
@@ -33,14 +33,14 @@ var myFaveTeam = F1Team.McLaren
     Remember that a switch has to be exhaustive so you may need to use the 'default' keyword.
  */
 
-myFaveTeam = .RBR
+myFaveTeam = .rbr
 
 switch myFaveTeam {
-case .Mercedes:
+case .mercedes:
     print("This is the best team")
-case .RBR:
+case .rbr:
     print("This team won the 2022 WDC and WCC")
-case .Ferrari:
+case .ferrari:
     print("This team is a meme team")
 default:
     print("This team isn't really competitive at all")
