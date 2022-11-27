@@ -10,6 +10,13 @@ import Cocoa
  
  */
 
+/* Good resources
+ 
+ https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
+ https://www.avanderlee.com/swift/enumerations/
+ 
+ */
+
 // the most basic definition of an enum - note that, like with types in Swift more generally, we capitalise the name. It's also a convention to use a singular name.
 
 enum F1Team {
