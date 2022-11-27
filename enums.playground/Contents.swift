@@ -33,6 +33,8 @@ var myFaveTeam = F1Team.McLaren
     Remember that a switch has to be exhaustive so you may need to use the 'default' keyword.
  */
 
+myFaveTeam = .RBR
+
 switch myFaveTeam {
 case .Mercedes:
     print("This is the best team")
@@ -45,7 +47,51 @@ default:
 }
 
 
-// iterating over enum cases
+/* Iterating over enum cases
+    
+You can treat an enum as a collection of values, which you can iterate over, by making an enum conform to the CaseIterable protocol. You can then access all its cesses as a collection and iterate over them.
+ 
+ */
 
-// raw values
+enum F1TeamCollection: CaseIterable {
+    case Mercedes, RBR, Ferrari
+}
 
+for team in F1TeamCollection.allCases {
+    print("The team is \(team)")
+}
+print("The number of the teams is \(F1TeamCollection.allCases.count)")
+
+
+/* Enums and raw values
+ 
+Enum cases can be pre-populated with defalt values, which must all be of the same type.
+ 
+ */
+
+enum F1Points: Int {
+    case first = 25
+    case second = 18
+    case third = 15
+}
+
+var Ham = F1Points.first
+print("HAM scored \(Ham.rawValue) points")
+
+// When you provide your enum with raw values, the enum (i) is given an initializer, such that you can initialise the enum from a raw value and (ii) turns into an optional (because the initializer may take in a value for which there is no case - see example with unwrapping below).
+
+var Ver = F1Points(rawValue: 15)
+
+if let verPoints = Ver {
+    print("VER came \(verPoints) and scored \(verPoints.rawValue) points")
+} else {
+    print("VER was off the podium")
+}
+
+
+
+/* Other topics covered in the docs which I've not dug into:
+    1. associated values
+    2. recursive enums
+ 
+ */
