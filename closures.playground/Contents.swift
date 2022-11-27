@@ -12,6 +12,11 @@ import Cocoa
  
  The examples below uses the .sorted method - which takes in another method as its parameter, specifying the order of sorting - to illustrate how closures syntax works.
  
+ Resources:
+ 
+    * See here for discussion of closures capturing values, closures as reference types and escaping closures: https://docs.swift.org/swift-book/LanguageGuide/Closures.html
+    * See here for a useful cheat-sheet on closure declarations: http://goshdarnclosuresyntax.com/
+ 
  */
 
 var faang = ["Twitter", "Meta", "Google", "Amazon"]
