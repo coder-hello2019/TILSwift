@@ -72,7 +72,7 @@ print("The number of the teams is \(F1TeamCollection.allCases.count)")
 
 /* Enums and raw values
  
-Enum cases can be pre-populated with defalt values, which must all be of the same type.
+Enum cases can be pre-populated with defalt values, which must all be of the same type. Raw values can be particularly helpful if you want to, for example, download some data from a server and match it to enum cases.
  
  */
 
