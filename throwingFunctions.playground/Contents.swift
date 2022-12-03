@@ -7,13 +7,13 @@ Throwing functions and do-catch functionality are used to handle situations in w
  The key logic here works as follows:
     * whenever we think that a function may return an error, we have to first 'try' and get the actual result from it, using a 'try' statement;
     * try statements are enclosed in the 'do' portion of do-catch statements - we try to get the result inside the 'do', and catch any errors inside the 'catch';
-    * in order to be able to 'catch' an error, we need to use a throwing function i.e. a function capable of throwing an error. These functions are marked with a 'throws' keyword before their return type. This keyword tells us that a function may throw an error (but it doesn't necessarily have to).
+    * in order to be able to 'catch' an error, we need to use a throwing function i.e. a function capable of throwing an error. These functions are marked with a 'throws' keyword before their return arrow (i.e. after their parameters). This keyword tells us that a function may throw an error (but it doesn't necessarily have to). Catch statements can be made to match specific patterns, so that they only catch the specified types of errors instead of all errors.
  
  */
 
 // a dummy error that does nothing - it's just for example purposes
 enum DummyError: Error {
-    case testError
+    case demoError
 }
 
 // MARK: demo throwing functions
@@ -23,13 +23,13 @@ func thisFunctionThrows (isTrue: Bool) throws -> String {
     if isTrue == true {
         return "This should print :)"
     } else {
-        throw DummyError.testError
+        throw DummyError.demoError
     }
 }
 
 // a dummy throwing function that ALWAYS throws an error
 func thisFuncAlwaysThrows () throws -> Void {
-    throw DummyError.testError
+    throw DummyError.demoError
 }
 
 // MARK: demo do-catch statements
