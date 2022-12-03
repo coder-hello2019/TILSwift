@@ -61,4 +61,17 @@ class WorldChampion: Driver {
 var ham = WorldChampion(name: "Hamilton", racingNumber: 44, numOfTitles: 7)
 ham.numOfTitles
 
+// class inheritance often spans many levels, e.g.
+class HistoricWorldChamption: WorldChampion {
+    var seasons: [String]
+    
+    init(name: String, racingNumer: Int, numOfTitles: Int, seasons: [String]) {
+        self.seasons = seasons
+        super.init(name: name, racingNumber: racingNumer, numOfTitles: numOfTitles)
+    }
+}
+
+var lauda = HistoricWorldChamption(name: "Lauda", racingNumer: 1, numOfTitles: 4, seasons: ["1981", "1983"])
+lauda.seasons
+
 
