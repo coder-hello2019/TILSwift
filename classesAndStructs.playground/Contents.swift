@@ -13,6 +13,8 @@ import Cocoa
  
  */
 
+// MARK: CLASSES
+
 // basic example of a class to represent an F1 driver - note the explicit use of an initializer
 class Driver {
     var name: String
@@ -62,7 +64,8 @@ var ham = WorldChampion(name: "Hamilton", racingNumber: 44, numOfTitles: 7)
 ham.numOfTitles
 
 // class inheritance often spans many levels, e.g.
-class HistoricWorldChamption: WorldChampion {
+// the 'final' keyword here also means that this class can't be subclassed; there are various reasons why you might want to prevent subcalssing e.g. if multiple ppl are working in the code and you're worried that they might break things by subclassing
+final class HistoricWorldChamption: WorldChampion {
     var seasons: [String]
     
     init(name: String, racingNumer: Int, numOfTitles: Int, seasons: [String]) {
@@ -73,5 +76,36 @@ class HistoricWorldChamption: WorldChampion {
 
 var lauda = HistoricWorldChamption(name: "Lauda", racingNumer: 1, numOfTitles: 4, seasons: ["1981", "1983"])
 lauda.seasons
+
+/*
+ As flagged above, it is key to remember that classes are reference types (think pointers in C) so copies of a class share its data. The example below illustrates this.
+ This is also the reason for classes having de-initialisers. Things could get confusing without them, given that everything points to the same underlying data.
+ */
+
+var hunt = lauda
+hunt.numOfTitles
+
+hunt.numOfTitles = 1
+
+hunt.numOfTitles
+lauda.numOfTitles
+
+// MARK: STRUCTS
+
+// demo struct for an F1 driver which has properties for the driver's name and the position they finished this season - note the lack of an initialiser here
+struct F1Driver {
+    var name: String
+    var finishedSeason: Int
+}
+
+var ver = F1Driver(name: "Verstappen", finishedSeason: 1)
+var per = ver
+
+per.name
+
+per.name = "Perez"
+per.finishedSeason = 3
+
+
 
 
