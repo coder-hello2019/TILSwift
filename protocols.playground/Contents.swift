@@ -57,6 +57,33 @@ read(book: demoBook2)
 demoBook1.readMe()
 demoBook2.readMe()
 
+// we can also have 'protocol compisions' i.e. a mechanism that applies the combined requirements of multiple compositions. Let's add a new Ebook protocol to explore how protocols can be combined.
+protocol EBook {
+    var publisher: String {get set}
+}
+
+struct KindleBook: BookProtocol, EBook {
+    var title: String
+    var author: String
+    var publisher: String
+    
+    func readMe() {
+        print("read me")
+    }
+}
+
+// this function takes parameters that conform to the protocol composition of BookProtocol & EBook
+
+func readEBook(ebook: BookProtocol & EBook) {
+    print("I'm reading \(ebook.title) published on \(ebook.publisher)")
+}
+
+var demoKindle = KindleBook(title: "Deep Work", author: "Cal Newport", publisher: "kindle")
+readEBook(ebook: demoKindle)
+
+demoKindle.readMe()
+
+
 
 /* Protocol inheritance
  
@@ -121,5 +148,46 @@ demoNotAComputer.name = "hey"
 demoNotAComputer.memory
 demoNotAComputer.cpu
 
+/*
+ Extension example not involving a protocol but using one of Apple's own types
+ */
 
+// We can also do this with Apple's existing types, like so:
+extension Int {
+    
+    func squared() -> Int {
+        return self * self
+    }
+}
 
+var testInt = 5
+testInt.squared()
+
+// we can make this broader by making the .squared() function apply to all Numeric types
+
+extension Numeric {
+    // the reference to capitalised 'Self' here means that we'll be returning output of the type that is passed in; this is so that the function can cater for both Ints and Doubles
+    func squared() -> Self {
+        // the lowercase self here just refers to 'whatever input this function was applied to'
+        return self * self
+    }
+}
+
+var testNumericInt = 5
+testNumericInt.squared()
+
+var testNumericDouble = 4.0
+testNumericDouble.squared()
+
+extension String {
+    func makeChristmasy() -> String {
+        var returnString: String = ""
+        for character in self.lowercased() {
+            returnString.append(String(character) + " HO! ")
+        }
+        return returnString
+    }
+}
+
+var testString = "hello world"
+testString.makeChristmasy()
