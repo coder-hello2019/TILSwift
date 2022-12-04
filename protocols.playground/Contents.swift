@@ -1,7 +1,7 @@
 import Cocoa
 
 /* Foundations
- A protocol defines a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality. Protocols therefore let us define how structs, classes and enums ought to work and enforces compliance. It's effectively a way to extract common functionality of structs/classes/enums into one place and then apply it to custom structcs/classes/enums as needed.
+ A protocol defines a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality. Protocols therefore let us define how structs, classes and enums ought to work and enforces compliance (protocols are said to be 'adopted' by structs/classes/enums). They're effectively a way to extract common functionality of structs/classes/enums into one place and then apply it to custom structcs/classes/enums as needed.
  
  Think of a protocol like the 'lowest common denominator' for multiple structs/classes/enums.
  
@@ -9,7 +9,7 @@ import Cocoa
 
 // MARK: PROTOCOLS
 
-// define a protocol - note that (i) property requirements are always defined as variable properties and (ii) gettable and settable properties are indicated by writing { get set } after their type declaration, and gettable properties are indicated by writing { get }
+// define a protocol - note that (i) property requirements are always defined as variable properties and (ii) gettable and settable properties are indicated by writing { get set } after their type declaration, and gettable properties are indicated by writing { get } (only using { get } doesn't mean that the property has to be gettable-only, just that it CAN be gettable-only}.
 protocol BookProtocol {
     var title: String {get set}
     var author: String {get set}
@@ -63,6 +63,7 @@ struct MacBook: Laptop {
 
 var air = MacBook(screenSize: 13, memory: 256, cpu: "M1")
 air.cpu
+
 
 
 
