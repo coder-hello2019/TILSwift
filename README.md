@@ -8,3 +8,5 @@ A repo to document my revision (or learning anew) of key Swift concepts - includ
 * [Throwing functions](https://github.com/coder-hello2019/TILSwift/blob/main/throwingFunctions.playground/Contents.swift)
 
 * [Structs and classes](https://github.com/coder-hello2019/TILSwift/blob/main/classesAndStructs.playground/Contents.swift)
+
+* [Protocols](https://github.com/coder-hello2019/TILSwift/blob/main/protocols.playground/Contents.swift)
