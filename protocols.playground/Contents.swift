@@ -4,15 +4,22 @@ import Cocoa
  A protocol defines a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality. Protocols therefore let us define how structs, classes and enums ought to work and enforces compliance (protocols are said to be 'adopted' by structs/classes/enums). They're effectively a way to extract common functionality of structs/classes/enums into one place and then apply it to custom structcs/classes/enums as needed.
  
  Think of a protocol like the 'lowest common denominator' for multiple structs/classes/enums.
+
+Defining a protocol - note that:
+(i) property requirements are always defined as variable properties,
+(ii) gettable and settable properties are indicated by writing { get set } after their type declaration, and gettable properties are indicated by writing { get } (only using { get } doesn't mean that the property has to be gettable-only, just that it CAN be gettable-only},
+(iii) protocols can require that object conforming to them have / use specific methods - see example below.
  
  */
 
 // MARK: PROTOCOLS
 
-// define a protocol - note that (i) property requirements are always defined as variable properties and (ii) gettable and settable properties are indicated by writing { get set } after their type declaration, and gettable properties are indicated by writing { get } (only using { get } doesn't mean that the property has to be gettable-only, just that it CAN be gettable-only}.
+// defining protocols - here is one that requires that the object conforming to it have title and author properties and have a method that returns nil
 protocol BookProtocol {
     var title: String {get set}
     var author: String {get set}
+    
+    func readMe() -> ()
 }
 
 // each struct created using the protocol must contain the title and author fields but they can have properties on top of these two
@@ -20,12 +27,20 @@ struct Biography: BookProtocol {
     var title: String
     var author: String
     var yearPublished: Int
+    
+    func readMe() -> () {
+        print("You're reading a biography")
+    }
 }
 
 struct Textbook: BookProtocol {
     var title: String
     var author: String
     var subject: String
+    
+    func readMe() -> () {
+        print("You're reading a textbook")
+    }
 }
 
 func read(book: BookProtocol) {
@@ -38,6 +53,9 @@ var demoBook2 = Textbook(title: "Algorithms", author: "Sedgwick", subject: "comp
 // the read() function can take anything that conforms to BookProtocol as its arguments, so we can use it on both the Biography and TextBook structs
 read(book: demoBook1)
 read(book: demoBook2)
+
+demoBook1.readMe()
+demoBook2.readMe()
 
 
 /* Protocol inheritance
@@ -52,7 +70,7 @@ protocol Computer {
 }
 
 protocol Laptop: Computer {
-    var screenSize: Int {get}
+    var screenSize: Int {get set}
 }
 
 struct MacBook: Laptop {
@@ -65,6 +83,26 @@ var air = MacBook(screenSize: 13, memory: 256, cpu: "M1")
 air.cpu
 
 
-
-
 // MARK: EXTENSIONS
+
+/*
+ Extensions allow us to modify types we don't own (e.g. created by Apple) to adapt and conform to a new protocol. This is how we would do this:
+ */
+
+// a struct that doesn't conform to Computer
+struct NotAComputer {
+    var name: String
+}
+
+extension NotAComputer: Computer {
+    
+    var cpu: String {
+        return self.name
+    }
+    var memory: Int {
+        return self.cpu.count
+    }
+}
+
+var demoNotAComputer = NotAComputer(name: "I'm not a computer")
+demoNotAComputer.memory
