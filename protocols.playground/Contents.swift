@@ -65,7 +65,7 @@ demoBook2.readMe()
  */
 
 protocol Computer {
-    var memory: Int {get set}
+    var memory: Int {get}
     var cpu: String {get set}
 }
 
@@ -89,20 +89,37 @@ air.cpu
  Extensions allow us to modify types we don't own (e.g. created by Apple) to adapt and conform to a new protocol. This is how we would do this:
  */
 
-// a struct that doesn't conform to Computer
+// a struct that doesn't conform to Computer - for the sake of argument, let's assume that we wouldn't normally have access to this
 struct NotAComputer {
     var name: String
 }
 
+// extension to NotAComputer to make it conform to Computer - note that WE CAN ONLY EXTENT STRUCTS FOR COMPUTED PROPERTIES, NOT STORED PROPERTIES
 extension NotAComputer: Computer {
-    
-    var cpu: String {
-        return self.name
-    }
     var memory: Int {
-        return self.cpu.count
+        get {
+            return self.name.count
+        }
     }
+    var cpu: String {
+        get {
+            return self.name
+        }
+        set {
+            name = newValue
+        }
+    }
+    
 }
 
+// note that we now declare NotAComputer just with its original property 'name', but it also has the computed properties of 'memory' and 'cpu'
 var demoNotAComputer = NotAComputer(name: "I'm not a computer")
 demoNotAComputer.memory
+demoNotAComputer.cpu
+
+demoNotAComputer.name = "hey"
+demoNotAComputer.memory
+demoNotAComputer.cpu
+
+
+
