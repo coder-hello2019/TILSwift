@@ -1,20 +1,21 @@
 import Cocoa
 
 /* Foundations
- A protocol defines a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality. Protocols therefore let us define how structs, classes and enums ought to work and enforces compliance (protocols are said to be 'adopted' by structs/classes/enums). They're effectively a way to extract common functionality of structs/classes/enums into one place and then apply it to custom structcs/classes/enums as needed.
+ A protocol defines a blueprint of methods, properties, and other requirements that suit a particular task or piece of functionality. Protocols therefore let us define how structs, classes and enums ought to work and enforce compliance (protocols are said to be 'adopted' by structs/classes/enums).
+ Protocols are effectively a way to extract common functionality of structs/classes/enums into one place and then apply it to structcs/classes/enums, as needed.
  
  Think of a protocol like the 'lowest common denominator' for multiple structs/classes/enums.
 
-Defining a protocol - note that:
+Defining a protocol - points to note:
 (i) property requirements are always defined as variable properties,
 (ii) gettable and settable properties are indicated by writing { get set } after their type declaration, and gettable properties are indicated by writing { get } (only using { get } doesn't mean that the property has to be gettable-only, just that it CAN be gettable-only},
-(iii) protocols can require that object conforming to them have / use specific methods - see example below.
+(iii) protocols can require that objects conforming to them have specific methods, not just properties.
  
  */
 
 // MARK: PROTOCOLS
 
-// defining protocols - here is one that requires that the object conforming to it have title and author properties and have a method that returns nil
+// defining protocols - here is one that requires the object conforming to it have 'title' and 'author' properties and have a method that returns nil
 protocol BookProtocol {
     var title: String {get set}
     var author: String {get set}
@@ -22,7 +23,7 @@ protocol BookProtocol {
     func readMe() -> ()
 }
 
-// each struct created using the protocol must contain the title and author fields but they can have properties on top of these two
+// each struct created using the protocol must have the title and author properties (and it may have any properties over and above the required ones)
 struct Biography: BookProtocol {
     var title: String
     var author: String
@@ -50,18 +51,19 @@ func read(book: BookProtocol) {
 var demoBook1 = Biography(title: "Steve Jobs", author: "Walter Isaacson", yearPublished: 2011)
 var demoBook2 = Textbook(title: "Algorithms", author: "Sedgwick", subject: "computer science")
 
-// the read() function can take anything that conforms to BookProtocol as its arguments, so we can use it on both the Biography and TextBook structs
+// the read() function can take as an argument anything that conforms to the 'BookProtocol' protocol, so we can use the function on both the Biography and TextBook structs
 read(book: demoBook1)
 read(book: demoBook2)
 
 demoBook1.readMe()
 demoBook2.readMe()
 
-// we can also have 'protocol compisions' i.e. a mechanism that applies the combined requirements of multiple compositions. Let's add a new Ebook protocol to explore how protocols can be combined.
+// we can also have 'protocol compositions' i.e. a mechanism that applies the combined requirements of multiple protocols to a struct/class/enum. Let's add a new EBook protocol to explore how protocols can be combined.
 protocol EBook {
     var publisher: String {get set}
 }
 
+// a struct that must conform to both, BookProtocol and EBook protocols
 struct KindleBook: BookProtocol, EBook {
     var title: String
     var author: String
@@ -72,8 +74,7 @@ struct KindleBook: BookProtocol, EBook {
     }
 }
 
-// this function takes parameters that conform to the protocol composition of BookProtocol & EBook
-
+// any parameter passed to this function must conform to both BookProtocol and EBook protocols
 func readEBook(ebook: BookProtocol & EBook) {
     print("I'm reading \(ebook.title) published on \(ebook.publisher)")
 }
@@ -87,7 +88,7 @@ demoKindle.readMe()
 
 /* Protocol inheritance
  
- Helpful if we want to combine functionality for common work e.g. a 'computer' protocol (that covers all PCs) will have CPU and memory parameters, but a 'laptop' protocol may need both of these properties PLUS a screen size property.
+ This is helpful if we want to combine functionality for common work e.g. a 'computer' protocol (that covers all PCs) will have CPU and memory parameters, but a 'laptop' protocol may need both of these properties PLUS a screen size property. 'Laptop' can therefore inherit from 'Computer' and add any extra properties it may need, on top of those of 'Computer'.
  
  */
 
@@ -113,15 +114,15 @@ air.cpu
 // MARK: EXTENSIONS
 
 /*
- Extensions allow us to modify types we don't own (e.g. created by Apple) to adapt and conform to a new protocol. This is how we would do this:
+ Extensions allow us to modify types which we don't own (e.g. ones created by Apple) to adapt and conform to a new protocol. This is how we would do this:
  */
 
-// a struct that doesn't conform to Computer - for the sake of argument, let's assume that we wouldn't normally have access to this
+// a struct that doesn't conform to Computer - for the sake of argument, let's assume that we wouldn't normally have access to the code of this struct
 struct NotAComputer {
     var name: String
 }
 
-// extension to NotAComputer to make it conform to Computer - note that WE CAN ONLY EXTENT STRUCTS FOR COMPUTED PROPERTIES, NOT STORED PROPERTIES
+// extension to NotAComputer to make it conform to Computer - note that WE CAN ONLY EXTEND STRUCTS FOR COMPUTED PROPERTIES, NOT STORED PROPERTIES
 extension NotAComputer: Computer {
     var memory: Int {
         get {
@@ -149,10 +150,9 @@ demoNotAComputer.memory
 demoNotAComputer.cpu
 
 /*
- Extension example not involving a protocol but using one of Apple's own types
+ Extension examples not involving a protocol, but using one of Apple's own types
  */
 
-// We can also do this with Apple's existing types, like so:
 extension Int {
     
     func squared() -> Int {
@@ -163,8 +163,7 @@ extension Int {
 var testInt = 5
 testInt.squared()
 
-// we can make this broader by making the .squared() function apply to all Numeric types
-
+// we can make this example broader by making the .squared() function apply to all Numeric types
 extension Numeric {
     // the reference to capitalised 'Self' here means that we'll be returning output of the type that is passed in; this is so that the function can cater for both Ints and Doubles
     func squared() -> Self {
