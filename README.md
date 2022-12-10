@@ -3,7 +3,7 @@
 A repo to document my revision (or learning anew) of key Swift concepts - includes notes and code snippets.
 
 ## Topics covered so far:
-* [Computed Properties](https://github.com/coder-hello2019/TILSwift/blob/main/computedProperties.playground/Contents.swift)
+* [Computed properties](https://github.com/coder-hello2019/TILSwift/blob/main/computedProperties.playground/Contents.swift)
 * [Enums](https://github.com/coder-hello2019/TILSwift/blob/main/enums.playground/Contents.swift)
 * [Closures](https://github.com/coder-hello2019/TILSwift/blob/main/closures.playground/Contents.swift)
 * [Throwing functions](https://github.com/coder-hello2019/TILSwift/blob/main/throwingFunctions.playground/Contents.swift)
@@ -11,3 +11,5 @@ A repo to document my revision (or learning anew) of key Swift concepts - includ
 * [Structs and classes](https://github.com/coder-hello2019/TILSwift/blob/main/classesAndStructs.playground/Contents.swift)
 
 * [Protocols](https://github.com/coder-hello2019/TILSwift/blob/main/protocols.playground/Contents.swift)
+
+* [Switch statements](https://github.com/coder-hello2019/TILSwift/blob/main/switchStatements.playground/Contents.swift)
