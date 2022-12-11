@@ -56,6 +56,45 @@ if let hello = thisMayReturnNil(demoInput: "hello") {
     print("Couldn't unwrap hello")
 }
 
+// worth noting that accessing values in a dict based on a value key return optionals
+
+var demoDict = ["one": 1, "two": 2, "three": 3]
+print(demoDict["one"]) //-> note the error on the right about expressed coercion; we should really be unwrapping this
+
+// you can use the nil-coalescing operator to provide a default value in case the optional unwraps to nil; note that this line doesn't throw a warning, unlike line 62 above
+var demoDict2 = demoDict["two"] ?? 2
+print(demoDict2)
+
+/* Optional chaining
+ Optional chaining allows you to run some code only on an optional, only if that optional returns a value. More formally, it is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil.
+ */
+
+// a function that may return a String but could also return nil
+func returnF1Team(number: Int) -> String? {
+    switch number {
+    case 1:
+        return "Mercedes"
+    case 2:
+        return "Red Bull"
+    default:
+        return nil
+    }
+}
+// myTeam is an optional because returnF1Team could return a nil
+var myTeam = returnF1Team(number: 9)
+// the commented out line below will crash the program. myTeam! will unwrap to be nil, and .uppercased() only knows how to work on Strings so this will throw a runtime error.
+//print("My team is \(myTeam!.uppercased())")
+
+// so instead, we tell the program - 'uppercase the value of myTeam, but only if myTeam actually has an underlying value rather than nil. The ? is actually similar to ! (i.e. forced unwrapping) except that it fails gracefully instead of crashing the program.
+print("My team is \(myTeam?.uppercased())")
+
+// we could also do this:
+if let myTeam1 = myTeam?.uppercased() {
+    print("My team #1 is \(myTeam1)")
+} else {
+    print("Hmmm, I don't know that team")
+}
+
 /* Guard let vs if let
  
  'if let' keeps the unwrapped value in the current condition / loop / function. 'guard let' is designed to exit the current condition / loop / function, and any values unwerapped using it will stay around after the check. Note that 'guard let' requires that you exit the current scope (i.e. we must return if the 'guard let' fails).
@@ -87,6 +126,8 @@ func printMeaningOfLife() -> () {
     print("meaningOfLife using guard let: \(meaningOfLife)")
 }
 printMeaningOfLife()
+
+
 
 
 
