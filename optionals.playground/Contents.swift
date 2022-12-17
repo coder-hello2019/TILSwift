@@ -33,7 +33,6 @@ print(hello)
 print(optionalDemo)
 
 // but now let's try to actually perform some actions on optionalDemo which do require them to be Strings - this is where problems start
-
 hello?.count
 // this line below will just not compile because optionalDemo needs to be unwrapped
 //optionalDemo.count
@@ -61,7 +60,7 @@ if let hello = thisMayReturnNil(demoInput: "hello") {
 var demoDict = ["one": 1, "two": 2, "three": 3]
 print(demoDict["one"]) //-> note the error on the right about expressed coercion; we should really be unwrapping this
 
-// you can use the nil-coalescing operator to provide a default value in case the optional unwraps to nil; note that this line doesn't throw a warning, unlike line 62 above
+// you can use the nil-coalescing operator to provide a default value in case the optional unwraps to nil; note that this line doesn't throw a warning, unlike line 61 above
 var demoDict2 = demoDict["two"] ?? 2
 print(demoDict2)
 
@@ -100,7 +99,7 @@ if let myTeam1 = myTeam?.uppercased() {
  'if let' keeps the unwrapped value in the current condition / loop / function. 'guard let' is designed to exit the current condition / loop / function, and any values unwerapped using it will stay around after the check. Note that 'guard let' requires that you exit the current scope (i.e. we must return if the 'guard let' fails).
  
  A few points to note on usage / style (largely from [this discussion on SO](https://stackoverflow.com/questions/32256834/swift-guard-let-vs-if-let)):
- * if the 'if-let' block was going to be the rest of the function (or if you otherwise going to perform significant computations in the 'if-let' brach), it's best to use 'guard let';
+ * if the 'if-let' block was going to be the rest of the function (or if you are otherwise going to perform significant computations in the 'if-let' brach), it's best to use 'guard let';
  * generally, use 'guard', when you have a much higher expectancy that you will get back a value rather than nil (e.g. whre you're expecting a file to be there and something's gone wrong and it isn't);
  * avoid 'guard let' if it's 'else' clause introduces side effects;
  * it's not possible to use 'guard let' outside a function.
