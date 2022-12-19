@@ -33,7 +33,15 @@ struct PublishedNote {
     var isPublished: Bool
 }
 
-struct NoteView<Note>: View {
+protocol ANote {
+    var author: String? {get set}
+    var title: String? {get set}
+}
+
+extension BookNote: ANote {}
+extension PublishedNote: ANote {}
+
+struct NoteView<Note: ANote>: View {
     var note: Note
     
     var body: some View {
@@ -47,7 +55,7 @@ struct NoteView<Note>: View {
 
 struct ContentView: View {
     
-    var testNote = BookNote(author: "Jack Edwards", title: "UniversiTEA")
+    var testNote = BookNote(author: "Plato")
     
     var body: some View {
         Text("Author: \(testNote.author ?? "none"), title: \(testNote.title ?? "none")")
