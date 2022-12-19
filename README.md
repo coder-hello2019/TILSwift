@@ -15,3 +15,5 @@ A repo to document my revision (or learning anew) of key Swift concepts - includ
 * [Switch statements](https://github.com/coder-hello2019/TILSwift/blob/main/switchStatements.playground/Contents.swift)
 
 * [Optionals (only active recall notes + code so far - to be built out for any gaps in knowledge)](https://github.com/coder-hello2019/TILSwift/blob/main/optionals.playground/Contents.swift)
+
+* [Generics](https://github.com/coder-hello2019/TILSwift/blob/main/generics.playground/Contents.swift)
