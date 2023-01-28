@@ -19,7 +19,7 @@ import Foundation
  */
 
 // we fetch data through a URLSession using tasks - 'dataTask' is the task that fetches the contents of the specified URL (but we need to create the URL first!)
-let url = URL(string: "https://ergast.com/api/f1/2001/constructors.json")!
+let url = URL(string: "https://ergast.com/api/f1/2022/constructors.json")!
 
 // then we create the dataTask - note the reference to the 'shared' property of URLSession. This is needed because, as mentioned above, URLSession uses a singleton.
 let task = URLSession.shared.dataTask(with: url){ data, response, error in
@@ -58,7 +58,11 @@ task.resume()
 struct F1TeamData: Codable {
     
     // this is the topmost level
-    var MRData: MRData
+    var mrData: MRData
+    
+    enum CodingKeys: String, CodingKey {
+        case mrData = "MRData"
+    }
     
     struct MRData: Codable {
 //        var xmlns: String
@@ -67,7 +71,12 @@ struct F1TeamData: Codable {
 //        var limit: String
 //        var offset: String
 //        var total: String
-        var ConstructorTable: ConstructorTable
+        var constructorTable: ConstructorTable
+        
+        // we use coding keys to map the names of fields in the json to what we want the names to be in our structs
+        enum CodingKeys: String, CodingKey {
+            case constructorTable = "ConstructorTable"
+        }
     }
     
     // this is one level above Constructor
@@ -79,9 +88,9 @@ struct F1TeamData: Codable {
     // this is the bottom-most level of the nested json we receive from Ergast
     struct Constructor: Codable {
         var constructorId: String
-        //var url: String
         var name: String
         //var nationality: String
+        //var url: String
     }
 }
 
@@ -92,7 +101,7 @@ let task1 = URLSession.shared.dataTask(with: url){ data, response, error in
         //if we've received some data back, use a JSONDecoder to decode that data into F1TeamData
         if let decodedData = try? JSONDecoder().decode(F1TeamData.self, from: receivedData) {
             
-            for constructor in decodedData.MRData.ConstructorTable.Constructors {
+            for constructor in decodedData.mrData.constructorTable.Constructors {
                 print("The constructor name is \(constructor.name) and the constructor code is \(constructor.constructorId)")
             }
             
