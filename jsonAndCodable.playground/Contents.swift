@@ -19,7 +19,7 @@ import Foundation
  */
 
 // we fetch data through a URLSession using tasks - 'dataTask' is the task that fetches the contents of the specified URL (but we need to create the URL first!)
-let url = URL(string: "https://ergast.com/api/f1/2021/constructors.json")!
+let url = URL(string: "https://ergast.com/api/f1/1976/constructors.json")!
 
 // then we create the dataTask - note the reference to the 'shared' property of URLSession. This is needed because, as mentioned above, URLSession uses a singleton.
 let task = URLSession.shared.dataTask(with: url){ data, response, error in
@@ -41,7 +41,17 @@ task.resume()
     * Codable is 'a type that can convert itself into and out of an external representation' (i.e. this is the thing that we are decoding into).
  */
 
-// Create the Codable struct. This will need to be nested, so that our Codable struct follows the structure of the json that we receive from Ergast.
+/* Create the Codable struct. This will need to be nested, so that our Codable struct follows the structure of the json that we receive from Ergast. The structure of the json is:
+    -> MRData
+        -> some random data
+        -> ConstructorTable
+            -> season
+            -> Constructors
+                -> constructorId
+                -> url
+                -> name
+                -> nationality
+ */
 
 struct F1TeamData: Codable {
     
@@ -79,7 +89,11 @@ let task1 = URLSession.shared.dataTask(with: url){ data, response, error in
     if let receivedData = data {
         //if we've received some data back, use a JSONDecoder to decode that data into F1TeamData
         if let decodedData = try? JSONDecoder().decode(F1TeamData.self, from: receivedData) {
-            print(decodedData)
+            
+            for constructor in decodedData.MRData.ConstructorTable.Constructors {
+                print("The constructor name is \(constructor.name) and the constructor code is \(constructor.constructorId)")
+            }
+            
         } else {
             print("failed to decode")
         }
@@ -89,3 +103,4 @@ let task1 = URLSession.shared.dataTask(with: url){ data, response, error in
 }
 
 task1.resume()
+
