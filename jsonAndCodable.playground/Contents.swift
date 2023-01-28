@@ -33,4 +33,59 @@ let task = URLSession.shared.dataTask(with: url){ data, response, error in
 
 task.resume()
 
-// so at this point we get some data back, but that's just json turned into a bunch of bytes. We need to transform it into a format that can sensibly be used in our Swift code.
+/*
+ So at this point we get some data back, but that's just json turned into a bunch of bytes. We need to transform it into a format that can sensibly be used in our Swift code. We normally do this using a JSONDecoder and the Codable protocol (Codable encapsulates both Encodable and Decodable).
+ 
+ As per Apple's documentation:
+    * a JSONDecoder is 'an object that decodes instances of a data type from JSON objects' (i.e. this is the thing doing the decoding); and
+    * Codable is 'a type that can convert itself into and out of an external representation' (i.e. this is the thing that we are decoding into).
+ */
+
+// Create the Codable struct. This will need to be nested, so that our Codable struct follows the structure of the json that we receive from Ergast.
+
+struct F1TeamData: Codable {
+    
+    // this is the topmost level
+    var MRData: MRData
+    
+    struct MRData: Codable {
+        var xmlns: String
+        var series: String
+        var url: String
+        var limit: String
+        var offset: String
+        var total: String
+        var ConstructorTable: ConstructorTable
+    }
+    
+    // this is one level above Constructor
+    struct ConstructorTable: Codable {
+        var season: String
+        var Constructors: [Constructor]
+    }
+    
+    // this is the bottom-most level of the nested json we receive from Ergast
+    struct Constructor: Codable {
+        var constructorId: String
+        var url: String
+        var name: String
+        var nationality: String
+    }
+}
+
+// let's create another dataTask to grab data from Ergast and decode it into the structure above.
+
+let task1 = URLSession.shared.dataTask(with: url){ data, response, error in
+    if let receivedData = data {
+        //if we've received some data back, use a JSONDecoder to decode that data into F1TeamData
+        if let decodedData = try? JSONDecoder().decode(F1TeamData.self, from: receivedData) {
+            print(decodedData)
+        } else {
+            print("failed to decode")
+        }
+    } else if let receivedError = error {
+        print("Error: \(receivedError.localizedDescription)")
+    }
+}
+
+task1.resume()
