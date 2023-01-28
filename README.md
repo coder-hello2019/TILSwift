@@ -17,3 +17,5 @@ A repo to document my revision (or learning anew) of key Swift concepts - includ
 * [Optionals (only active recall notes + code so far - to be built out for any gaps in knowledge)](https://github.com/coder-hello2019/TILSwift/blob/main/optionals.playground/Contents.swift)
 
 * [Generics](https://github.com/coder-hello2019/TILSwift/blob/main/generics.playground/Contents.swift)
+
+* [URLSession and Codable protocols](https://github.com/coder-hello2019/TILSwift/blob/main/jsonAndCodable.playground/Contents.swift)
