@@ -19,7 +19,7 @@ import Foundation
  */
 
 // we fetch data through a URLSession using tasks - 'dataTask' is the task that fetches the contents of the specified URL (but we need to create the URL first!)
-let url = URL(string: "https://ergast.com/api/f1/1976/constructors.json")!
+let url = URL(string: "https://ergast.com/api/f1/2001/constructors.json")!
 
 // then we create the dataTask - note the reference to the 'shared' property of URLSession. This is needed because, as mentioned above, URLSession uses a singleton.
 let task = URLSession.shared.dataTask(with: url){ data, response, error in
@@ -51,6 +51,8 @@ task.resume()
                 -> url
                 -> name
                 -> nationality
+
+ Note that the irrelevant fields have been commented out below - they were only included originally for illustrative purposes.
  */
 
 struct F1TeamData: Codable {
@@ -59,27 +61,27 @@ struct F1TeamData: Codable {
     var MRData: MRData
     
     struct MRData: Codable {
-        var xmlns: String
-        var series: String
-        var url: String
-        var limit: String
-        var offset: String
-        var total: String
+//        var xmlns: String
+//        var series: String
+//        var url: String
+//        var limit: String
+//        var offset: String
+//        var total: String
         var ConstructorTable: ConstructorTable
     }
     
     // this is one level above Constructor
     struct ConstructorTable: Codable {
-        var season: String
+        //var season: String
         var Constructors: [Constructor]
     }
     
     // this is the bottom-most level of the nested json we receive from Ergast
     struct Constructor: Codable {
         var constructorId: String
-        var url: String
+        //var url: String
         var name: String
-        var nationality: String
+        //var nationality: String
     }
 }
 
