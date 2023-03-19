@@ -76,3 +76,4 @@ privateAccount.deposit(amount: 1000)
 privateAccount.withdraw(amount: 500)
 // note that - because we used private(set) rather than just strictly private - we can read the funds property but can't write to it
 print("private(set) funds after deposit and withdrawal: \(privateAccount.funds)")
+
