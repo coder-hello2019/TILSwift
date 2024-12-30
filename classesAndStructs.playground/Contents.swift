@@ -106,6 +106,7 @@ per.name
 per.name = "Perez"
 per.finishedSeason = 3
 
-
+print("ver.name: \(ver.name), ver.finishedSeason: \(ver.finishedSeason)")
+print("per.name: \(per.name), per.finishedSeason: \(per.finishedSeason)")
 
 

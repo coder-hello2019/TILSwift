@@ -10,12 +10,12 @@ This probably isn't as much of an issue for lone wolf indie devs, but definitely
  when working as part of a bigger team to make sure that code is used as expected.
  
  Levels of protection:
- - private: don't let anything outside the struct use thiss
+ - private: don't let anything outside the struct use this
  - fileprivate: don't let anything outsidet the current file use this
  - public: let anyone, anywhere use this.
  - private(set) - let anyone read the property, but only let my internal methods write this (although this level is apparently not used all that much in protection, just in teaching/learning).
  
- Let's worth through an example.
+ Let's work through an example.
 
  */
 
